@@ -1,0 +1,16 @@
+{
+  "watch": [
+    "bin/",
+    "controller/",
+    "models/",
+    "dbhelper/",
+    "public/",
+    "routes/",
+    "app.js"
+  ],
+  "exec": "node app.js",
+  "verbose": true,
+  "ignore": [
+    "node_modules"
+  ]
+}
