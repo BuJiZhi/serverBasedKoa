@@ -1,19 +1,15 @@
 const mongoose = require('mongoose')
 
-const connectMongodb = () => {
-  mongoose.connect('mongodb://127.0.0.1:27017/koaServer',{
+async function connectMongodb() {
+  await mongoose.connect('mongodb://127.0.0.1:27017/koaServer',{
     useNewUrlParser: true
   })
-  let db = mongoose.connection
-
-  db.on('error', () => {
-    console.log('数据库连接出错')
+  .then(() => {
+    console.log('Mongodb connected')
   })
-
-  db.once('open', () => {
-    console.log('数据库连接成功')
+  .catch(err => {
+    throw err
   })
-  
 }
 
 module.exports = connectMongodb

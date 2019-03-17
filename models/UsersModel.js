@@ -1,23 +1,61 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.ObjectId
-// const dateFormat = require('../utils/getDate')
+const dateFormat = require('../utils/getDate')
 
 const usersSchema = new Schema({
   id: ObjectId,
-  name: {type: String},
-  password: {type: String},
-  avatar: {type: String, default: ''},
-  registerDate: {type: String, default: new Date()},
+  userName: {
+    type: String,
+    required: true
+  },
+  passWord: {
+    type: String,
+    required: true
+  },
+  avatar: {
+    type: String, 
+    default: ''
+  },
+  introduce: {
+    type: String,
+    default: 'Say nothing yet'
+  },
+  registerDate: {
+    type: Date, 
+    default: Date.now()
+  },
   notesBook: {
-    notesBookName: {type: String, default: 'Untitle notebook'},
-    currentNoteId: {type: String, default: ''},
+    notesBookName: {
+      type: String, 
+      default: 'Untitle notebook'
+    },
+    currentNoteId: {
+      type: String, 
+      default: '001'
+    },
+    noteCounter: {
+      type: Number,
+      default: 0,
+    },
     notes: [
       {
-        id: {type: String, default: ''},
-        theme: {type: String, default: ''},
-        title: {type: String, default: 'Untitle'},
-        noteContent: {type: String, default: {}}
+        id: {
+          type: String, 
+          default: ''
+        },
+        theme: {
+          type: String, 
+          default: `null`
+        },
+        title: {
+          type: String, 
+          default: 'Untitle'
+        },
+        noteContent: {
+          type: String, 
+          default: {}
+        }
       }
     ]
   }

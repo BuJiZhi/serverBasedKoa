@@ -5,14 +5,33 @@ const ObjectId = Schema.ObjectId
 
 const TeachersSchema = new Schema({
   id: ObjectId,
-  teacher_name: {type: String},
-  introduce: {type: String},
-  teacher_avatar: {type: String, default: ''},
-  videoUrl: {type: String},
-  tags: {type: Array},
+  teacher_name: {
+    type: String,
+    require: true
+  },
+  introduce: {
+    type: String,
+    default: 'Say nothing yet'
+  },
+  teacher_avatar: {
+    type: String, 
+    default: ''
+  },
+  videoUrl: {
+    type: String
+  },
+  tags: {
+    type: Array
+  },
   courses: {
-    notesBookName: {type: String, default: 'Untitle notebook'},
-    currentNoteId: {type: String, default: ''},
+    notesBookName: {
+      type: String, 
+      default: 'Untitle notebook'
+    },
+    currentNoteId: {
+      type: String, 
+      default: ''
+    },
     notes: [
       {
         id: {type: String},

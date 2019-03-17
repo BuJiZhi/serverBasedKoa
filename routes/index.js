@@ -3,11 +3,12 @@ const regisetr = require('../dbhelper/register')
 const saveTeacher = require('../dbhelper/uploadTeachers')
 
 router
-  .get('/', ctx => {
+  .get('/', async (ctx, next) => {
     ctx.body = 'hello world'
+    next()
   })
   .get('/login', ctx => {
-    regisetr()
+    ctx.body = 'hello world'
   })
   .get('/teachers', ctx => {
     saveTeacher()
