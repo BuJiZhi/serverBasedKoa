@@ -1,5 +1,8 @@
 const UsersModel = require('../models/UsersModel')
-const {userNameTest} = require('../utils/regTest')
+const {userNameTest} = require('../config/tools')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const secretOrKey = require('../config/keys').secretOrKey
 
 module.exports = async function(ctx) {
   if (!ctx.request.body) {
@@ -18,11 +21,17 @@ module.exports = async function(ctx) {
 
     const result = await UsersModel.findOne({userName: check.userName})
     if (result) {
-      if (result.passWord === check.passWord) {
+      const res = bcrypt.compareSync(check.passWord, result.passWord)
+      if (res) {
+        const payload = {
+          id: result._id,
+          userName: result.userName,
+        }
+        const token = jwt.sign({...payload}, secretOrKey, {expiresIn: 3600})
         ctx.body = {
           status: 1,
           message: 'Login success',
-          data: result
+          token: 'Bearer ' + token
         }
       } else {
         ctx.body = {

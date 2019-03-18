@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.ObjectId
-const dateFormat = require('../utils/getDate')
 
 const usersSchema = new Schema({
   id: ObjectId,

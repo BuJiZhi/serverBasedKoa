@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
+const mongoURI = require('../config/keys').mongoURI
 
 async function connectMongodb() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/koaServer',{
+  await mongoose.connect(mongoURI,{
     useNewUrlParser: true
   })
   .then(() => {

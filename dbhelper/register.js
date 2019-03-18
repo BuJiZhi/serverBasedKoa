@@ -1,5 +1,6 @@
 const UsersModel = require('../models/UsersModel')
-const {userNameTest} = require('../utils/regTest')
+const {userNameTest} = require('../config/tools')
+const bcrypt = require('bcrypt')
 
 module.exports = async function(ctx) {
   if (ctx.request.body) {
@@ -10,18 +11,23 @@ module.exports = async function(ctx) {
     if (!userNameTest(check.userName)) {
       ctx.body = {
         status: 0,
-        message: 'user name unlegal'
+        message: 'user name ilegal'
       }
     } else {
       const result = await UsersModel.find({userName: check.userName})
-      console.log(result)
       if (result.length > 0) {
         ctx.body = {
           status: 0,
           message: 'user name already existed'
         }
       } else {
-        const user = new UsersModel(check)
+        let user = new UsersModel(check)
+
+        //同步加密
+        let salt = bcrypt.genSaltSync(10)
+        let hash = bcrypt.hashSync(user.passWord, salt)
+        user.passWord = hash
+        
         await user
           .save()
           .then((user) =>{
@@ -34,7 +40,7 @@ module.exports = async function(ctx) {
             console.log(err)
             ctx.body = {
               status: 1,
-              message: 'user success registered'
+              message: 'Failed to register'
             }
           })
       }
